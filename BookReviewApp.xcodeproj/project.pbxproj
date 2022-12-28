@@ -14,6 +14,10 @@
 		E3D0C6FD295C66DB004071E2 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C6FC295C66DB004071E2 /* ComposableArchitecture */; };
 		E3D0C700295C6705004071E2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C6FF295C6705004071E2 /* Kingfisher */; };
 		E3D0C703295C671A004071E2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C702295C671A004071E2 /* SnapKit */; };
+		E3D0C708295C6F70004071E2 /* BookResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C707295C6F70004071E2 /* BookResponse.swift */; };
+		E3D0C70C295C703E004071E2 /* BooksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C70B295C703E004071E2 /* BooksClient.swift */; };
+		E3D0C70F295C7092004071E2 /* ErrorUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C70E295C7092004071E2 /* ErrorUtility.swift */; };
+		E3D0C711295C767B004071E2 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C710295C767B004071E2 /* AppConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		E3D0C6E8295C6531004071E2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E3D0C6ED295C6536004071E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3D0C6F2295C6536004071E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3D0C707295C6F70004071E2 /* BookResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookResponse.swift; sourceTree = "<group>"; };
+		E3D0C70B295C703E004071E2 /* BooksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksClient.swift; sourceTree = "<group>"; };
+		E3D0C70E295C7092004071E2 /* ErrorUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtility.swift; sourceTree = "<group>"; };
+		E3D0C710295C767B004071E2 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,7 @@
 			children = (
 				E3D0C6F2295C6536004071E2 /* Info.plist */,
 				E3D0C6F8295C65E1004071E2 /* Application */,
+				E3D0C706295C6F5D004071E2 /* Data */,
 				E3D0C6F9295C65F6004071E2 /* Presentation */,
 				E3D0C6ED295C6536004071E2 /* Assets.xcassets */,
 			);
@@ -71,6 +80,7 @@
 			children = (
 				E3D0C6E4295C6531004071E2 /* AppDelegate.swift */,
 				E3D0C6E6295C6531004071E2 /* SceneDelegate.swift */,
+				E3D0C710295C767B004071E2 /* AppConfiguration.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -89,6 +99,40 @@
 				E3D0C6E8295C6531004071E2 /* MainViewController.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		E3D0C706295C6F5D004071E2 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E3D0C70D295C707F004071E2 /* Utils */,
+				E3D0C709295C6F9F004071E2 /* Model */,
+				E3D0C70A295C7028004071E2 /* Client */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		E3D0C709295C6F9F004071E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E3D0C707295C6F70004071E2 /* BookResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E3D0C70A295C7028004071E2 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				E3D0C70B295C703E004071E2 /* BooksClient.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		E3D0C70D295C707F004071E2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E3D0C70E295C7092004071E2 /* ErrorUtility.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,8 +215,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3D0C6E9295C6531004071E2 /* MainViewController.swift in Sources */,
+				E3D0C70F295C7092004071E2 /* ErrorUtility.swift in Sources */,
 				E3D0C6E5295C6531004071E2 /* AppDelegate.swift in Sources */,
+				E3D0C70C295C703E004071E2 /* BooksClient.swift in Sources */,
 				E3D0C6E7295C6531004071E2 /* SceneDelegate.swift in Sources */,
+				E3D0C711295C767B004071E2 /* AppConfiguration.swift in Sources */,
+				E3D0C708295C6F70004071E2 /* BookResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,12 +346,14 @@
 		E3D0C6F6295C6536004071E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_BASE_URL = "https://openlibrary.org/search.json?";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JUH3Q3SWFH;
 				GENERATE_INFOPLIST_FILE = YES;
+				IMAGE_BASE_URL = "https://covers.openlibrary.org/b/id/";
 				INFOPLIST_FILE = BookReviewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -325,12 +375,14 @@
 		E3D0C6F7295C6536004071E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_BASE_URL = "https://openlibrary.org/search.json?";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JUH3Q3SWFH;
 				GENERATE_INFOPLIST_FILE = YES;
+				IMAGE_BASE_URL = "https://covers.openlibrary.org/b/id/";
 				INFOPLIST_FILE = BookReviewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
