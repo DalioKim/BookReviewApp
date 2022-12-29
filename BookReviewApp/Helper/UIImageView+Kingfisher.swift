@@ -30,20 +30,25 @@ extension UIImageView {
         }
     }
     
-    func setThumbnailOfBook(with idx: Int) {
+    func setBookCover(with idx: Int?) {
         guard let imageBaseURL = Bundle.main.object(forInfoDictionaryKey: "ImageBaseURL") as? String else {
             fatalError("ImageBaseURL must not be empty in plist")
+        }
+        
+        guard let idx = idx else {
+            setImage(nil)
+            return
         }
         
         let imagePath = imageBaseURL + "/b/id/\(idx)-S.jpg"
         setImage(imagePath)
     }
-
+    
     func clear() {
         self.kf.cancelDownloadTask()
         self.image = nil
     }
-        
+    
     private func getCacheImage(_ imagePath: String?, completion: @escaping ((UIImage?) -> Void)) {
         guard let imagePath = imagePath else {
             completion(nil)

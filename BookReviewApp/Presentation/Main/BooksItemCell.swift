@@ -7,9 +7,7 @@
 
 import UIKit
 
-class BooksItemCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: BooksItemCell.self)
-    
+class BooksItemCell: UICollectionViewCell {    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [thumbnailView, titleLabel])
         stackView.axis = .horizontal
@@ -65,9 +63,7 @@ class BooksItemCell: UICollectionViewCell {
     
     func bind(with book: Book) {
         titleLabel.text = book.title
-        guard let idx = book.thumbnailIdx else { return }
-        
-        thumbnailView.setThumbnailOfBook(with: idx)
+        thumbnailView.setBookCover(with: book.thumbnailIdx)
     }
 }
 
