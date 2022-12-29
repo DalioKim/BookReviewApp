@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - BookResponse
+
 struct BookResponse: Codable, Equatable {
     var searchResultsCount: Int
     var items: [Book]
