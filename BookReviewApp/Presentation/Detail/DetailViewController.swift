@@ -10,16 +10,34 @@ import ComposableArchitecture
 
 class DetailViewController: UIViewController {
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [thumbnailView, titleLabel])
+        let stackView = UIStackView(arrangedSubviews: [thumbnailView, titleLabel, authorsLabel])
+        stackView.spacing = Size.stackSpacing
         stackView.axis = .vertical
-        stackView.spacing = 10
         stackView.alignment = .center
         
         thumbnailView.snp.makeConstraints {
-            $0.height.equalTo(200)
+            $0.width.equalTo(Size.thumbnailWidth)
+            $0.height.equalTo(Size.thumbnailHeight)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().inset(Size.labelHorizontalInset)
+            $0.height.equalTo(Size.labelHeight)
+        }
+        
+        authorsLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().inset(Size.labelHorizontalInset)
+            $0.height.equalTo(Size.labelHeight)
         }
         
         return stackView
+    }()
+    
+    private let thumbnailView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     private let titleLabel: UILabel = {
@@ -28,11 +46,10 @@ class DetailViewController: UIViewController {
         return titleLabel
     }()
     
-    private let thumbnailView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
+    private let authorsLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textAlignment = .left
+        return titleLabel
     }()
     
     private let store: Store<DetailState, DetailAction>
@@ -61,9 +78,21 @@ extension DetailViewController {
     enum Size {
         static let stackHorizontalInset: CGFloat = 20
         static let stackVerticalInset: CGFloat = 100
+        static let stackSpacing: CGFloat = 10
+        static let thumbnailWidth: CGFloat = 160
+        static let thumbnailHeight: CGFloat = 200
+        static let labelHorizontalInset: CGFloat = 20
+        static let labelHeight: CGFloat = 40
+    }
+    
+    enum Label {
+        static let title = "책 제목"
+        static let authorsName = "공동 저자"
+        static let colon = ": "
+        static let comma = ", "
     }
 }
-    
+
 // MARK: - Private Methods
 
 extension DetailViewController {
@@ -77,7 +106,8 @@ extension DetailViewController {
     
     private func setupContent() {
         let book = viewStore.state.book
-        titleLabel.text = book.title
         thumbnailView.setBookCover(with: book.thumbnailIdx)
+        titleLabel.text = Label.title + Label.colon + book.title
+        authorsLabel.text = Label.authorsName + Label.colon + book.authorsName.joined(separator: Label.comma)
     }
 }

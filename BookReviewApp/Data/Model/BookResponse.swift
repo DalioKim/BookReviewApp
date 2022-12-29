@@ -29,15 +29,18 @@ struct BookResponse: Codable, Equatable {
 struct Book: Codable, Equatable {
     var thumbnailIdx: Int?
     var title: String
+    var authorsName: [String]
     
     enum Keys: String, CodingKey {
         case thumbnailIdx = "cover_i"
         case title = "title"
+        case authorsName = "author_name"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         thumbnailIdx = try container.decodeIfPresent(Int.self, forKey: .thumbnailIdx)
         title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        authorsName = try container.decodeIfPresent([String].self, forKey: .authorsName) ?? []
     }
 }
