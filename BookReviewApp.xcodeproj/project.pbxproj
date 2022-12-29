@@ -15,9 +15,9 @@
 		E3D0C700295C6705004071E2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C6FF295C6705004071E2 /* Kingfisher */; };
 		E3D0C703295C671A004071E2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C702295C671A004071E2 /* SnapKit */; };
 		E3D0C708295C6F70004071E2 /* BookResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C707295C6F70004071E2 /* BookResponse.swift */; };
-		E3D0C70C295C703E004071E2 /* BooksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C70B295C703E004071E2 /* BooksClient.swift */; };
-		E3D0C70F295C7092004071E2 /* ErrorUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C70E295C7092004071E2 /* ErrorUtility.swift */; };
-		E3D0C711295C767B004071E2 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C710295C767B004071E2 /* AppConfiguration.swift */; };
+		E3D0C70F295C7092004071E2 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C70E295C7092004071E2 /* ServiceError.swift */; };
+		E3D0C71D295D5A86004071E2 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = E3D0C71C295D5A86004071E2 /* CombineMoya */; };
+		E3D0C71F295D5D11004071E2 /* BookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0C71E295D5D10004071E2 /* BookClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +28,8 @@
 		E3D0C6ED295C6536004071E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3D0C6F2295C6536004071E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3D0C707295C6F70004071E2 /* BookResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookResponse.swift; sourceTree = "<group>"; };
-		E3D0C70B295C703E004071E2 /* BooksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksClient.swift; sourceTree = "<group>"; };
-		E3D0C70E295C7092004071E2 /* ErrorUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtility.swift; sourceTree = "<group>"; };
-		E3D0C710295C767B004071E2 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		E3D0C70E295C7092004071E2 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		E3D0C71E295D5D10004071E2 /* BookClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +39,7 @@
 			files = (
 				E3D0C703295C671A004071E2 /* SnapKit in Frameworks */,
 				E3D0C700295C6705004071E2 /* Kingfisher in Frameworks */,
+				E3D0C71D295D5A86004071E2 /* CombineMoya in Frameworks */,
 				E3D0C6FD295C66DB004071E2 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,6 @@
 			children = (
 				E3D0C6E4295C6531004071E2 /* AppDelegate.swift */,
 				E3D0C6E6295C6531004071E2 /* SceneDelegate.swift */,
-				E3D0C710295C767B004071E2 /* AppConfiguration.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -122,7 +121,7 @@
 		E3D0C70A295C7028004071E2 /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				E3D0C70B295C703E004071E2 /* BooksClient.swift */,
+				E3D0C71E295D5D10004071E2 /* BookClient.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -130,7 +129,7 @@
 		E3D0C70D295C707F004071E2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E3D0C70E295C7092004071E2 /* ErrorUtility.swift */,
+				E3D0C70E295C7092004071E2 /* ServiceError.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -155,6 +154,7 @@
 				E3D0C6FC295C66DB004071E2 /* ComposableArchitecture */,
 				E3D0C6FF295C6705004071E2 /* Kingfisher */,
 				E3D0C702295C671A004071E2 /* SnapKit */,
+				E3D0C71C295D5A86004071E2 /* CombineMoya */,
 			);
 			productName = BookReviewApp;
 			productReference = E3D0C6E1295C6531004071E2 /* BookReviewApp.app */;
@@ -188,6 +188,7 @@
 				E3D0C6FB295C66DB004071E2 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				E3D0C6FE295C6705004071E2 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E3D0C701295C671A004071E2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E3D0C71B295D5A86004071E2 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = E3D0C6E2295C6531004071E2 /* Products */;
 			projectDirPath = "";
@@ -215,11 +216,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3D0C6E9295C6531004071E2 /* MainViewController.swift in Sources */,
-				E3D0C70F295C7092004071E2 /* ErrorUtility.swift in Sources */,
+				E3D0C70F295C7092004071E2 /* ServiceError.swift in Sources */,
 				E3D0C6E5295C6531004071E2 /* AppDelegate.swift in Sources */,
-				E3D0C70C295C703E004071E2 /* BooksClient.swift in Sources */,
 				E3D0C6E7295C6531004071E2 /* SceneDelegate.swift in Sources */,
-				E3D0C711295C767B004071E2 /* AppConfiguration.swift in Sources */,
+				E3D0C71F295D5D11004071E2 /* BookClient.swift in Sources */,
 				E3D0C708295C6F70004071E2 /* BookResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,14 +346,14 @@
 		E3D0C6F6295C6536004071E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				API_BASE_URL = "https://openlibrary.org/search.json?";
+				API_BASE_URL = "https://openlibrary.org";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JUH3Q3SWFH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IMAGE_BASE_URL = "https://covers.openlibrary.org/b/id/";
+				IMAGE_BASE_URL = "https://covers.openlibrary.org";
 				INFOPLIST_FILE = BookReviewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -375,14 +375,14 @@
 		E3D0C6F7295C6536004071E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				API_BASE_URL = "https://openlibrary.org/search.json?";
+				API_BASE_URL = "https://openlibrary.org";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JUH3Q3SWFH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IMAGE_BASE_URL = "https://covers.openlibrary.org/b/id/";
+				IMAGE_BASE_URL = "https://covers.openlibrary.org";
 				INFOPLIST_FILE = BookReviewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -449,6 +449,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		E3D0C71B295D5A86004071E2 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -466,6 +474,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E3D0C701295C671A004071E2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		E3D0C71C295D5A86004071E2 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3D0C71B295D5A86004071E2 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
