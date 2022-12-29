@@ -78,8 +78,6 @@ extension DetailViewController {
     private func setupContent() {
         let book = viewStore.state.book
         titleLabel.text = book.title
-        guard let idx = book.thumbnailIdx else { return }
-        
-        thumbnailView.setThumbnailOfBook(with: idx)
+        thumbnailView.setBookCover(with: book.thumbnailIdx)
     }
 }

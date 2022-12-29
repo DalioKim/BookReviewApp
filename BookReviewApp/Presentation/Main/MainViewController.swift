@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
                                            right: Size.horizontalPadding)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(BooksItemCell.self, forCellWithReuseIdentifier: "BooksItemCell")
+        collectionView.register(BooksItemCell.self, forCellWithReuseIdentifier: BooksItemCell.className)
         
         return collectionView
     }()
@@ -153,7 +153,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BooksItemCell.reuseIdentifier, for: indexPath) as? BooksItemCell else { fatalError() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BooksItemCell.className, for: indexPath) as? BooksItemCell else { fatalError() }
         
         let detailState = viewStore.state.books[indexPath.item]
         cell.bind(with: detailState.book)
