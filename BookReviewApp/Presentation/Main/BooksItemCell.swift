@@ -66,8 +66,9 @@ class BooksItemCell: UICollectionViewCell {
     
     func bind(with book: Book) {
         titleLabel.text = book.title
-        guard let thumbnailIdx = book.thumbnailIdx,
-              let url = URL(string: AppConfiguration.imagesBaseURL(with: thumbnailIdx)) else { return }
+        guard let idx = book.thumbnailIdx,
+              let imageBaseURL = Bundle.main.object(forInfoDictionaryKey: "ImageBaseURL") as? String,
+              let url = URL(string: imageBaseURL + "/b/id/\(idx)-S.jpg") else { return }
         
         thumbnailView.kf.setImage(
             with: url,

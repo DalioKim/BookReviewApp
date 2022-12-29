@@ -16,6 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainStore = Store<MainState, MainAction>(initialState: MainState(), reducer: MainReducer, environment: MainEnvironment(booksClient: .live, mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
         let window = UIWindow(windowScene: windowScene)
+        
         window.backgroundColor = .white
         window.rootViewController = UINavigationController(rootViewController: MainViewController(store: mainStore))
         window.makeKeyAndVisible()

@@ -14,13 +14,13 @@ struct MainState: Equatable {
     var currentPage = 1
 }
 
-enum MainAction {
+enum MainAction: Equatable {
     case searchQueryChanged(String)
-    case booksResponse(Result<[Book], Error>)
+    case booksResponse(Result<[Book], ServiceError>)
 }
 
 struct MainEnvironment {
-    var booksClient: BooksClient
+    var booksClient: BookClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
 
@@ -35,7 +35,7 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
             state.currentPage = 1
             
             return  environment.booksClient
-                .search(state.query, state.currentPage)
+                .search(.title(query: state.query, pageNum: state.currentPage))
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
                 .map(MainAction.booksResponse)
