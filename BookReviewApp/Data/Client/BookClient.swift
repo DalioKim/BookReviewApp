@@ -21,8 +21,9 @@ extension BookClient {
         search: { query in
             return bookProvider.requestPublisher(.search(query))
                 .filterSuccessfulStatusCodes()
-                .map([Book].self)
+                .map(BookResponse.self)
                 .mapError { ServiceError.moyaError($0) }
+                .map { $0.items }
                 .eraseToEffect()
         }
     )
