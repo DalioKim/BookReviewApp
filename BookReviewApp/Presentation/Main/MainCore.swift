@@ -24,6 +24,9 @@ struct MainState: Equatable {
     var currentPage = Calc.defaultOne
     var searchResultsCount = Calc.defaultZero
     
+    var isLoadingSearchResults = false
+    var isLoadingPage = false
+    
     fileprivate func isLastItem(_ item: UUID) -> Bool {
         let itemIndex = books.firstIndex(where: { $0.id == item })
         return itemIndex == books.endIndex - Calc.defaultOne
@@ -40,6 +43,8 @@ enum MainAction: Equatable {
     case searchQueryChanged(String)
     case retrieveNextPageIfNeeded(currentItem: UUID)
     case booksResponse(Result<BookResponse, ServiceError>)
+    case loadingActive(Bool)
+    case loadingPageActive(Bool)
     case moveDetail(id: DetailState.ID, action: DetailAction)
 }
 
@@ -61,12 +66,15 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
             state.query = query
             state.currentPage = Calc.defaultOne
             
-            return environment.booksClient
-                .search(.title(query: state.query, pageNum: state.currentPage))
-                .receive(on: environment.mainQueue)
-                .catchToEffect()
-                .map(MainAction.booksResponse)
-                .cancellable(id: BooksCancelId())
+            return .concatenate(
+                .init(value: .loadingActive(true)),
+                environment.booksClient
+                    .search(.title(query: state.query, pageNum: state.currentPage))
+                    .receive(on: environment.mainQueue)
+                    .catchToEffect()
+                    .map(MainAction.booksResponse)
+                    .cancellable(id: BooksCancelId())
+            )
             
         case let .retrieveNextPageIfNeeded(uuid):
             guard state.isLastItem(uuid),
@@ -76,19 +84,36 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
             
             state.currentPage += Calc.defaultOne
             
-            return environment.booksClient
-                .search(.title(query: state.query, pageNum: state.currentPage))
-                .receive(on: environment.mainQueue)
-                .catchToEffect()
-                .map(MainAction.booksResponse)
-                .cancellable(id: BooksCancelId())
+            return .concatenate(
+                .init(value: .loadingPageActive(true)),
+                environment.booksClient
+                    .search(.title(query: state.query, pageNum: state.currentPage))
+                    .receive(on: environment.mainQueue)
+                    .catchToEffect()
+                    .map(MainAction.booksResponse)
+                    .cancellable(id: BooksCancelId())
+            )
             
         case let .booksResponse(.success(result)):
             state.searchResultsCount = result.searchResultsCount
             state.books += result.items.map { DetailState(book: $0) }
-            return .none
+            return .concatenate(
+                .init(value: .loadingActive(false)),
+                .init(value: .loadingPageActive(false))
+            )
             
         case let .booksResponse(.failure(error)):
+            return .concatenate(
+                .init(value: .loadingActive(false)),
+                .init(value: .loadingPageActive(false))
+            )
+            
+        case let .loadingActive(isLoading):
+            state.isLoadingSearchResults = isLoading
+            return .none
+            
+        case let .loadingPageActive(isLoading):
+            state.isLoadingPage = isLoading
             return .none
             
         case .moveDetail:

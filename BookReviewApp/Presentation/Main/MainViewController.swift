@@ -12,6 +12,8 @@ import UIKit
 
 class MainViewController: UIViewController {
     private let searchBar = UISearchBar()
+    private let searchLoadingOrErrorView = LoadingOrErrorView()
+    private let pageLoadingOrErrorView = LoadingOrErrorView()
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -68,6 +70,8 @@ extension MainViewController {
     private func setupViews() {
         view.addSubview(searchBar)
         view.addSubview(collectionView)
+        view.addSubview(searchLoadingOrErrorView)
+        view.addSubview(pageLoadingOrErrorView)
         
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -75,10 +79,21 @@ extension MainViewController {
             $0.width.equalTo(Size.searchBarWidth)
             $0.height.equalTo(Size.searchBarHeight)
         }
+                
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(Size.collectionOffset)
             $0.bottom.equalToSuperview().inset(Size.collectionInset)
             $0.leading.trailing.equalToSuperview()
+        }
+        
+        searchLoadingOrErrorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        pageLoadingOrErrorView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(20)
         }
     }
     
@@ -90,9 +105,32 @@ extension MainViewController {
     }
     
     private func bindViewStore() {
-        self.viewStore.publisher.books
+        viewStore.publisher.books
             .sink(receiveValue: { [weak self] _ in self?.collectionView.reloadData() })
             .store(in: &self.cancellables)
+        
+        viewStore.publisher.isLoadingSearchResults
+            .sink(receiveValue: { [weak self] in
+                if $0 {
+                    self?.collectionView.isHidden = true
+                    self?.searchLoadingOrErrorView.showLoading()
+                } else {
+                    self?.collectionView.isHidden = false
+                    self?.searchLoadingOrErrorView.showSuccess()
+                }
+            })
+            .store(in: &self.cancellables)
+        
+        viewStore.publisher.isLoadingPage
+            .sink(receiveValue: { [weak self] in
+                if $0 {
+                    self?.pageLoadingOrErrorView.showLoading()
+                } else {
+                    self?.pageLoadingOrErrorView.showSuccess()
+                }
+            })
+            .store(in: &self.cancellables)
+
     }
 }
 
@@ -121,7 +159,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let detailState = viewStore.state.books[indexPath.item]
         cell.bind(with: detailState.book)
         viewStore.send(.retrieveNextPageIfNeeded(currentItem: detailState.id))
-
+        
         return cell
     }
     
