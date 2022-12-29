@@ -118,7 +118,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BooksItemCell.reuseIdentifier, for: indexPath) as? BooksItemCell else { fatalError() }
         
-        cell.bind(with: viewStore.state.books[indexPath.item].book)
+        let detailState = viewStore.state.books[indexPath.item]
+        cell.bind(with: detailState.book)
+        viewStore.send(.retrieveNextPageIfNeeded(currentItem: detailState.id))
+
         return cell
     }
     

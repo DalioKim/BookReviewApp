@@ -13,7 +13,7 @@ import Moya
 // MARK: - BookClient
 
 struct BookClient {
-    var search: (_ query: BookAPI.Option) -> Effect<[Book], ServiceError>
+    var search: (_ query: BookAPI.Option) -> Effect<BookResponse, ServiceError>
 }
 
 extension BookClient {
@@ -23,7 +23,6 @@ extension BookClient {
                 .filterSuccessfulStatusCodes()
                 .map(BookResponse.self)
                 .mapError { ServiceError.moyaError($0) }
-                .map { $0.items }
                 .eraseToEffect()
         }
     )

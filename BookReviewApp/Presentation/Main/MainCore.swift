@@ -12,11 +12,22 @@ struct MainState: Equatable {
     var books = IdentifiedArrayOf<DetailState>()
     var query = ""
     var currentPage = 1
+    var searchResultsCount = 0
+    
+    fileprivate func isLastItem(_ item: UUID) -> Bool {
+        let itemIndex = books.firstIndex(where: { $0.id == item })
+        return itemIndex == books.endIndex - 1
+    }
+    
+    fileprivate var isMoreSearchResults: Bool {
+        return searchResultsCount > currentPage * 100
+    }
 }
 
 enum MainAction: Equatable {
     case searchQueryChanged(String)
-    case booksResponse(Result<[Book], ServiceError>)
+    case retrieveNextPageIfNeeded(currentItem: UUID)
+    case booksResponse(Result<BookResponse, ServiceError>)
     case moveDetail(id: DetailState.ID, action: DetailAction)
 }
 
@@ -43,8 +54,24 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
                 .map(MainAction.booksResponse)
                 .cancellable(id: BooksCancelId())
             
+        case let .retrieveNextPageIfNeeded(uuid):
+            guard state.isLastItem(uuid),
+                  state.isMoreSearchResults else {
+                      return .none
+                  }
+            
+            state.currentPage += 1
+            
+            return environment.booksClient
+                .search(.title(query: state.query, pageNum: state.currentPage))
+                .receive(on: environment.mainQueue)
+                .catchToEffect()
+                .map(MainAction.booksResponse)
+                .cancellable(id: BooksCancelId())
+            
         case let .booksResponse(.success(result)):
-            state.books += result.map { DetailState(book: $0) }
+            state.searchResultsCount = result.searchResultsCount
+            state.books += result.items.map { DetailState(book: $0) }
             return .none
             
         case let .booksResponse(.failure(error)):

@@ -8,13 +8,16 @@
 import Foundation
 
 struct BookResponse: Codable, Equatable {
-  var items: [Book]
+    var searchResultsCount: Int
+    var items: [Book]
     enum Keys: String, CodingKey {
+        case searchResultsCount = "numFound"
         case items = "docs"
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
+        searchResultsCount = try container.decodeIfPresent(Int.self, forKey: .searchResultsCount) ?? 0
         items = try container.decodeIfPresent([Book].self, forKey: .items) ?? []
     }
 }
@@ -29,7 +32,7 @@ struct Book: Codable, Equatable {
         case thumbnailIdx = "cover_i"
         case title = "title"
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         thumbnailIdx = try container.decodeIfPresent(Int.self, forKey: .thumbnailIdx)
