@@ -6,11 +6,10 @@
 //
 
 import UIKit
-import Kingfisher
 
 class BooksItemCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: BooksItemCell.self)
-
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [thumbnailView, titleLabel])
         stackView.axis = .horizontal
@@ -40,7 +39,7 @@ class BooksItemCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -53,7 +52,7 @@ class BooksItemCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
-        thumbnailView.image = nil
+        thumbnailView.clear()
     }
     
     private func setupViews() {
@@ -66,16 +65,9 @@ class BooksItemCell: UICollectionViewCell {
     
     func bind(with book: Book) {
         titleLabel.text = book.title
-        guard let idx = book.thumbnailIdx,
-              let imageBaseURL = Bundle.main.object(forInfoDictionaryKey: "ImageBaseURL") as? String,
-              let url = URL(string: imageBaseURL + "/b/id/\(idx)-S.jpg") else { return }
+        guard let idx = book.thumbnailIdx else { return }
         
-        thumbnailView.kf.setImage(
-            with: url,
-            placeholder: nil,
-            options: .none,
-            completionHandler: nil
-          )
+        thumbnailView.setThumbnailOfBook(with: idx)
     }
 }
 
