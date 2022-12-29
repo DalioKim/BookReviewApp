@@ -79,7 +79,7 @@ extension MainViewController {
             $0.width.equalTo(Size.searchBarWidth)
             $0.height.equalTo(Size.searchBarHeight)
         }
-                
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(Size.collectionOffset)
             $0.bottom.equalToSuperview().inset(Size.collectionInset)
@@ -110,27 +110,26 @@ extension MainViewController {
             .store(in: &self.cancellables)
         
         viewStore.publisher.isLoadingSearchResults
-            .sink(receiveValue: { [weak self] in
-                if $0 {
+            .sink { [weak self] isLoading in
+                if isLoading {
                     self?.collectionView.isHidden = true
                     self?.searchLoadingOrErrorView.showLoading()
                 } else {
                     self?.collectionView.isHidden = false
                     self?.searchLoadingOrErrorView.showSuccess()
                 }
-            })
+            }
             .store(in: &self.cancellables)
         
         viewStore.publisher.isLoadingPage
-            .sink(receiveValue: { [weak self] in
-                if $0 {
+            .sink { [weak self] isLoading in
+                if isLoading {
                     self?.pageLoadingOrErrorView.showLoading()
                 } else {
                     self?.pageLoadingOrErrorView.showSuccess()
                 }
-            })
+            }
             .store(in: &self.cancellables)
-
     }
 }
 
