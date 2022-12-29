@@ -76,16 +76,10 @@ extension DetailViewController {
     }
     
     private func setupContent() {
-        titleLabel.text = viewStore.state.book.title
-        guard let idx = viewStore.state.book.thumbnailIdx,
-              let imageBaseURL = Bundle.main.object(forInfoDictionaryKey: "ImageBaseURL") as? String,
-              let url = URL(string: imageBaseURL + "/b/id/\(idx)-S.jpg") else { return }
+        let book = viewStore.state.book
+        titleLabel.text = book.title
+        guard let idx = book.thumbnailIdx else { return }
         
-        thumbnailView.kf.setImage(
-            with: url,
-            placeholder: nil,
-            options: .none,
-            completionHandler: nil
-        )
+        thumbnailView.setThumbnailOfBook(with: idx)
     }
 }
