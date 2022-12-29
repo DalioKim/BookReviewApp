@@ -19,8 +19,10 @@ class MainViewController: UIViewController {
                                            left: Size.horizontalPadding,
                                            bottom: Size.verticalPadding,
                                            right: Size.horizontalPadding)
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(BooksItemCell.self, forCellWithReuseIdentifier: "BooksItemCell")
+        
         return collectionView
     }()
     
@@ -116,7 +118,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BooksItemCell.reuseIdentifier, for: indexPath) as? BooksItemCell else { fatalError() }
         
-        cell.bind(with: viewStore.state.books[indexPath.item])
+        cell.bind(with: viewStore.state.books[indexPath.item].book)
         return cell
     }
     
@@ -125,5 +127,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return CGSize(width: width, height: Size.itemHeight)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let books = viewStore.state.books[indexPath.row]
+        
+        self.navigationController?.pushViewController(
+            DetailViewController(
+                store: self.store.scope(
+                    state: \.books[indexPath.row],
+                    action: { .moveDetail(id: books.id, action: $0) }
+                )
+            ),
+            animated: true
+        )
+    }
 }

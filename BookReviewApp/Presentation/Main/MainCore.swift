@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 struct MainState: Equatable {
-    var books = [Book]()
+    var books = IdentifiedArrayOf<DetailState>()
     var query = ""
     var currentPage = 1
 }
@@ -17,6 +17,7 @@ struct MainState: Equatable {
 enum MainAction: Equatable {
     case searchQueryChanged(String)
     case booksResponse(Result<[Book], ServiceError>)
+    case moveDetail(id: DetailState.ID, action: DetailAction)
 }
 
 struct MainEnvironment {
@@ -29,23 +30,27 @@ struct MainEnvironment {
 let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
     .init { state, action, environment in
         struct BooksCancelId: Hashable {}
+        
         switch action {
         case let .searchQueryChanged(query):
             state.query = query
             state.currentPage = 1
             
-            return  environment.booksClient
+            return environment.booksClient
                 .search(.title(query: state.query, pageNum: state.currentPage))
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
                 .map(MainAction.booksResponse)
                 .cancellable(id: BooksCancelId())
             
-        case .booksResponse(.success(let result)):
-            state.books += result
+        case let .booksResponse(.success(result)):
+            state.books += result.map { DetailState(book: $0) }
             return .none
             
-        case .booksResponse(.failure(let error)):
+        case let .booksResponse(.failure(error)):
+            return .none
+            
+        case .moveDetail:
             return .none
         }
     }
