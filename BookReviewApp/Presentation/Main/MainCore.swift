@@ -97,17 +97,14 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
         case let .booksResponse(.success(result)):
             state.searchResultsCount = result.searchResultsCount
             state.books += result.items.map { DetailState(book: $0) }
-            return .concatenate(
-                .init(value: .loadingActive(false)),
-                .init(value: .loadingPageActive(false))
-            )
+            return .merge([.init(value: .loadingActive(false)),
+                           .init(value: .loadingPageActive(false))])
+            
             
         case let .booksResponse(.failure(error)):
-            return .concatenate(
-                .init(value: .loadingActive(false)),
-                .init(value: .loadingPageActive(false))
-            )
-            
+            return .merge([.init(value: .loadingActive(false)),
+                           .init(value: .loadingPageActive(false))])
+
         case let .loadingActive(isLoading):
             state.isLoadingSearchResults = isLoading
             return .none
