@@ -65,7 +65,7 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
         case let .searchQueryChanged(query):
             state.query = query
             state.currentPage = Calc.defaultOne
-            
+            state.books = []
             return .concatenate(
                 .init(value: .loadingActive(true)),
                 environment.booksClient
@@ -83,7 +83,6 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
                   }
             
             state.currentPage += Calc.defaultOne
-            
             return .concatenate(
                 .init(value: .loadingPageActive(true)),
                 environment.booksClient
@@ -104,7 +103,7 @@ let MainReducer: Reducer<MainState, MainAction, MainEnvironment> = .combine(
         case let .booksResponse(.failure(error)):
             return .merge([.init(value: .loadingActive(false)),
                            .init(value: .loadingPageActive(false))])
-
+            
         case let .loadingActive(isLoading):
             state.isLoadingSearchResults = isLoading
             return .none
