@@ -36,7 +36,6 @@ class BooksView: UIView {
         super.init(frame: frame)
         
         setupViews()
-        bindDelegate()
         bindViewStore()
     }
     
@@ -56,9 +55,7 @@ class BooksView: UIView {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Size.LoadingView.height)
         }
-    }
-    
-    private func bindDelegate() {
+        
         collectionView.delegate = self
         collectionView.dataSource = self
     }

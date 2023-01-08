@@ -20,7 +20,6 @@ class SearchBarView: UIView {
         self.viewStore = ViewStore(store)
         super.init(frame: frame)
         setupViews()
-        bindSubViewDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -33,9 +32,7 @@ class SearchBarView: UIView {
         searchBar.snp.makeConstraints {
             $0.width.height.equalToSuperview()
         }
-    }
-    
-    private func bindSubViewDelegate() {
+        
         searchBar.delegate = self
         searchBar.showsCancelButton = false
     }
