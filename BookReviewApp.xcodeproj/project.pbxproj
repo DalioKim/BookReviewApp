@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E30802432967F54400437421 /* SearchCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802422967F54400437421 /* SearchCore.swift */; };
+		E30802452967FB2D00437421 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802442967FB2D00437421 /* SearchBarView.swift */; };
+		E30802482968024900437421 /* BooksCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802472968024900437421 /* BooksCore.swift */; };
+		E308024A2968025400437421 /* BooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802492968025400437421 /* BooksView.swift */; };
 		E31C5657295D8DCA0026A09F /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C5656295D8DCA0026A09F /* MainCore.swift */; };
 		E31C5659295D8DCF0026A09F /* BooksItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C5658295D8DCF0026A09F /* BooksItemCell.swift */; };
-		E31C565C295D92EC0026A09F /* DetailCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C565B295D92EC0026A09F /* DetailCore.swift */; };
 		E31C565E295D93610026A09F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C565D295D93610026A09F /* DetailViewController.swift */; };
 		E3B0A6FF295DB4090025682C /* UIImageView+Kingfisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B0A6FE295DB4090025682C /* UIImageView+Kingfisher.swift */; };
 		E3B0A702295DBDAD0025682C /* LoadingOrErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B0A701295DBDAD0025682C /* LoadingOrErrorView.swift */; };
@@ -28,9 +31,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E30802422967F54400437421 /* SearchCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCore.swift; sourceTree = "<group>"; };
+		E30802442967FB2D00437421 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		E30802472968024900437421 /* BooksCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCore.swift; sourceTree = "<group>"; };
+		E30802492968025400437421 /* BooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksView.swift; sourceTree = "<group>"; };
 		E31C5656295D8DCA0026A09F /* MainCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
 		E31C5658295D8DCF0026A09F /* BooksItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksItemCell.swift; sourceTree = "<group>"; };
-		E31C565B295D92EC0026A09F /* DetailCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCore.swift; sourceTree = "<group>"; };
 		E31C565D295D93610026A09F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E3B0A6FE295DB4090025682C /* UIImageView+Kingfisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kingfisher.swift"; sourceTree = "<group>"; };
 		E3B0A701295DBDAD0025682C /* LoadingOrErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOrErrorView.swift; sourceTree = "<group>"; };
@@ -61,10 +67,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E30802412967F53300437421 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E30802422967F54400437421 /* SearchCore.swift */,
+				E30802442967FB2D00437421 /* SearchBarView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		E30802462968022900437421 /* Books */ = {
+			isa = PBXGroup;
+			children = (
+				E30802472968024900437421 /* BooksCore.swift */,
+				E30802492968025400437421 /* BooksView.swift */,
+				E31C5658295D8DCF0026A09F /* BooksItemCell.swift */,
+			);
+			path = Books;
+			sourceTree = "<group>";
+		};
 		E31C565A295D92920026A09F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				E31C565B295D92EC0026A09F /* DetailCore.swift */,
 				E31C565D295D93610026A09F /* DetailViewController.swift */,
 			);
 			path = Detail;
@@ -129,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				E3B0A700295DBD980025682C /* Common */,
+				E30802412967F53300437421 /* Search */,
+				E30802462968022900437421 /* Books */,
 				E3D0C6FA295C6604004071E2 /* Main */,
 				E31C565A295D92920026A09F /* Detail */,
 			);
@@ -140,7 +166,6 @@
 			children = (
 				E31C5656295D8DCA0026A09F /* MainCore.swift */,
 				E3D0C6E8295C6531004071E2 /* MainViewController.swift */,
-				E31C5658295D8DCF0026A09F /* BooksItemCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -260,19 +285,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E30802452967FB2D00437421 /* SearchBarView.swift in Sources */,
+				E30802482968024900437421 /* BooksCore.swift in Sources */,
 				E31C5657295D8DCA0026A09F /* MainCore.swift in Sources */,
 				E3D0C6E9295C6531004071E2 /* MainViewController.swift in Sources */,
 				E3D0C70F295C7092004071E2 /* ServiceError.swift in Sources */,
 				E31C5659295D8DCF0026A09F /* BooksItemCell.swift in Sources */,
+				E30802432967F54400437421 /* SearchCore.swift in Sources */,
 				E3B0A704295DCA320025682C /* NSObject+ClassName.swift in Sources */,
 				E3D0C6E5295C6531004071E2 /* AppDelegate.swift in Sources */,
-				E31C565C295D92EC0026A09F /* DetailCore.swift in Sources */,
 				E3D0C6E7295C6531004071E2 /* SceneDelegate.swift in Sources */,
 				E3B0A702295DBDAD0025682C /* LoadingOrErrorView.swift in Sources */,
 				E31C565E295D93610026A09F /* DetailViewController.swift in Sources */,
 				E3B0A6FF295DB4090025682C /* UIImageView+Kingfisher.swift in Sources */,
 				E3D0C71F295D5D11004071E2 /* BookClient.swift in Sources */,
 				E3D0C708295C6F70004071E2 /* BookResponse.swift in Sources */,
+				E308024A2968025400437421 /* BooksView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
