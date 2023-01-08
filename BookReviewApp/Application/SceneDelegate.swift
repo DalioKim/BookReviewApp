@@ -14,11 +14,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let mainStore = Store<MainState, MainAction>(initialState: MainState(), reducer: MainReducer, environment: MainEnvironment(booksClient: .live, mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
         let window = UIWindow(windowScene: windowScene)
-        
+        let mainStore = Store<Main.State, Main.Action>(
+            initialState: Main.State(),
+            reducer: Main.reducer,
+            environment: Main.Environment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(),
+                                          booksClient: .live)
+        )
+
         window.backgroundColor = .white
-        window.rootViewController = UINavigationController(rootViewController: MainViewController(store: mainStore))
+        window.rootViewController = UINavigationController(rootViewController: MainViewController(with: mainStore))
         window.makeKeyAndVisible()
         
         self.window = window

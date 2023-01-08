@@ -52,12 +52,10 @@ class DetailViewController: UIViewController {
         return titleLabel
     }()
     
-    private let store: Store<DetailState, DetailAction>
-    private let viewStore: ViewStore<DetailState, DetailAction>
+    private let book: Book
     
-    init(store: Store<DetailState, DetailAction>) {
-        self.store = store
-        self.viewStore = ViewStore(store)
+    init(with book: Book) {
+        self.book = book
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -105,7 +103,6 @@ extension DetailViewController {
     }
     
     private func setupContent() {
-        let book = viewStore.state.book
         thumbnailView.setBookCover(with: book.thumbnailIdx)
         titleLabel.text = Label.title + Label.colon + book.title
         authorsLabel.text = Label.authorsName + Label.colon + book.authorsName.joined(separator: Label.comma)
