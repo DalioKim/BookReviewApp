@@ -16,6 +16,7 @@ struct Books {
     
     struct State : Equatable {
         var query = ""
+        var searchOption = SearchOption.title
         var books = [Book]()
         var isLoadingPage = false
         var currentPage = 1
@@ -31,7 +32,7 @@ struct Books {
     }
     
     enum Action {
-        case request(String)
+        case request(option: SearchOption, query: String)
         case response(Result<BookResponse, ServiceError>)
         case nextPage(idx: Int)
         case loadingActive(Bool)
@@ -48,13 +49,14 @@ struct Books {
         struct BooksCancelId: Hashable {}
         
         switch action {
-        case let .request(query):
+        case let .request(option, query):
             state.books = []
+            state.searchOption = option
             state.query = query
             state.currentPage = 1
             
             return environment.booksClient
-                .search(.title(query: state.query, pageNum: state.currentPage))
+                .search(state.searchOption, state.query, state.currentPage)
                 .receive(on: environment.mainQueue)
                 .catchToEffect()
                 .map(Books.Action.response)
@@ -69,7 +71,7 @@ struct Books {
             return .concatenate(
                 .init(value: .loadingActive(true)),
                 environment.booksClient
-                    .search(.title(query: state.query, pageNum: state.currentPage))
+                    .search(state.searchOption, state.query, state.currentPage)
                     .receive(on: environment.mainQueue)
                     .catchToEffect()
                     .map(Books.Action.response)

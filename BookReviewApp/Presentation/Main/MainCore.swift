@@ -46,9 +46,9 @@ struct Main {
         .init { state, action, environment in
             switch action {
             case let .search(.searchQueryChanged(query)):
-                return .init(value: .books(.request(query)))
+                return .init(value: .books(.request(option: state.searchState.option, query: query)))
                 
-            case .books(.request(_)):
+            case .books(.request):
                 return .init(value: .loadingActive(true))
                 
             case .books(.response):

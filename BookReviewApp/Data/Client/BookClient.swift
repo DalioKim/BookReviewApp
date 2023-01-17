@@ -13,13 +13,13 @@ import Moya
 // MARK: - BookClient
 
 struct BookClient {
-    var search: (_ query: BookAPI.Option) -> Effect<BookResponse, ServiceError>
+    var search: (_ option: SearchOption, _ query: String, _ pageNum: Int) -> Effect<BookResponse, ServiceError>
 }
 
 extension BookClient {
     static let live = BookClient(
-        search: { query in
-            return bookProvider.requestPublisher(.search(query))
+        search: { option, query, pageNum in
+            return bookProvider.requestPublisher(.search(option, query: query, pageNum: pageNum))
                 .filterSuccessfulStatusCodes()
                 .map(BookResponse.self)
                 .mapError { ServiceError.moyaError($0) }
@@ -33,12 +33,7 @@ extension BookClient {
 fileprivate let bookProvider = MoyaProvider<BookAPI>()
 
 enum BookAPI {
-    case search(_ option: Option)
-    
-    enum Option {
-        case title(query: String, pageNum: Int)
-        case author(query: String, pageNum: Int)
-    }
+    case search(_ option: SearchOption, query: String, pageNum: Int)
 }
 
 extension BookAPI: TargetType {
@@ -62,9 +57,9 @@ extension BookAPI: TargetType {
     
     var task: Task {
         switch self {
-        case let .search(option: .title(query, pageNum)):
+        case let .search(.title, query: query, pageNum: pageNum):
             return .requestParameters(parameters: ["title": query, "page": pageNum], encoding: URLEncoding.default)
-        case let .search(option: .author(query, pageNum)):
+        case let .search(.author, query: query, pageNum: pageNum):
             return .requestParameters(parameters: ["author": query, "page": pageNum], encoding: URLEncoding.default)
         }
     }

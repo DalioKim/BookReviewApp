@@ -10,7 +10,28 @@ import SnapKit
 import UIKit
 
 class SearchBarView: UIView {
-    private let searchBar = UISearchBar()
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [pickerView, searchBar])
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.showsCancelButton = false
+        return searchBar
+    }()
+    
+    private lazy var pickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        return pickerView
+    }()
     
     private let store: Store<Search.State, Search.Action>
     private let viewStore: ViewStore<Search.State, Search.Action>
@@ -25,16 +46,14 @@ class SearchBarView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     private func setupViews() {
-        self.addSubview(searchBar)
+        self.addSubview(stackView)
         
-        searchBar.snp.makeConstraints {
+        stackView.snp.makeConstraints {
             $0.width.height.equalToSuperview()
         }
         
-        searchBar.delegate = self
-        searchBar.showsCancelButton = false
     }
 }
 
@@ -49,5 +68,23 @@ extension SearchBarView: UISearchBarDelegate {
         dissmissKeyboard()
         guard let query = searchBar.text, query.isEmpty == false else { return }
         viewStore.send(.searchQueryChanged(query))
+    }
+}
+
+extension SearchBarView: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return SearchOption.allCases.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return SearchOption.allCases[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        viewStore.send(.searchOptionChanged(SearchOption.allCases[row]))
     }
 }

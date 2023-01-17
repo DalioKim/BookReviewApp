@@ -56,8 +56,8 @@ extension MainViewController {
 
 extension MainViewController {
     enum Size {
-        static let searchBarWidth: CGFloat = 200
-        static let searchBarHeight: CGFloat = 40
+        static let searchBarWidth: CGFloat = 300
+        static let searchBarHeight: CGFloat = 200
         static let collectionOffset: CGFloat = 10
         static let collectionInset: CGFloat = 10
     }
