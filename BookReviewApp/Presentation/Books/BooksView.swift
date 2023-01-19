@@ -61,7 +61,7 @@ class BooksView: UIView {
     }
     
     private func bindViewStore() {
-        viewStore.publisher.books
+        viewStore.publisher.items
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
             }
@@ -93,7 +93,6 @@ extension BooksView {
         enum Item {
             static let height: CGFloat = 200
         }
-
     }
 }
 
@@ -101,13 +100,13 @@ extension BooksView {
 
 extension BooksView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewStore.state.books.count
+        return viewStore.state.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BooksItemCell.className, for: indexPath) as? BooksItemCell else { fatalError() }
         
-        let book = viewStore.state.books[indexPath.item]
+        let book = viewStore.state.items[indexPath.item]
         cell.bind(with: book)
         viewStore.send(.nextPage(idx: indexPath.row))
         return cell
@@ -119,7 +118,7 @@ extension BooksView: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let book = viewStore.state.books[indexPath.row]
+        let book = viewStore.state.items[indexPath.row]
         viewStore.send(.detail(with: book))
     }
 }
