@@ -9,7 +9,9 @@ import ComposableArchitecture
 import Foundation
 
 struct Search {
-    struct State: Equatable { }
+    struct State: Equatable {
+       var word = ""
+    }
     
     enum Action {
         case searchQueryChanged(String)
@@ -18,7 +20,8 @@ struct Search {
     static let reducer =
     Reducer<Search.State, Search.Action, Void> { state, action, _ in
         switch action {
-        default:
+        case let .searchQueryChanged(word):
+            state.word = word
             return .none
         }
     }
