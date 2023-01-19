@@ -8,22 +8,15 @@
 import ComposableArchitecture
 import Foundation
 
-struct Books {
-    private enum Calc {
-       static let defaultOne = 1
-       static let countOfItemsPerPage = 100
-   }
-    
+struct Books {    
     struct State : Equatable {
-        var query = ""
-        var searchOption = SearchOption.title
-        var books = [Book]()
+        var items = [Book]()
         var isLoadingPage = false
         var currentPage = 1
         var pageSize = 1
         
         fileprivate func isLastItem(_ idx: Int) -> Bool {
-            return idx == books.count - Calc.defaultOne
+            return idx == items.count - Calc.defaultOne
         }
         
         fileprivate var isMoreBooks: Bool {
@@ -35,18 +28,13 @@ struct Books {
         case request(option: SearchOption, query: String)
         case response(Result<BookResponse, ServiceError>)
         case nextPage(idx: Int)
+        case loadMore
         case loadingActive(Bool)
         case detail(with: Book)
     }
     
-    struct Environment {
-        var mainQueue: AnySchedulerOf<DispatchQueue>
-        var booksClient: BookClient
-    }
-    
     static let reducer =
-    Reducer<Books.State, Books.Action, Books.Environment> { state, action, environment in
-        struct BooksCancelId: Hashable {}
+    Reducer<Books.State, Books.Action, Void> { state, action, _ in
         
         switch action {
         case let .request(option, query):
@@ -67,24 +55,14 @@ struct Books {
                 return .none
             }
             
-            state.currentPage += Calc.defaultOne
             return .concatenate(
                 .init(value: .loadingActive(true)),
-                environment.booksClient
-                    .search(state.searchOption, state.query, state.currentPage)
-                    .receive(on: environment.mainQueue)
-                    .catchToEffect()
-                    .map(Books.Action.response)
-                    .cancellable(id: BooksCancelId())
+                .init(value: .loadMore)
             )
             
-        case let .response(.success(result)):
-            state.pageSize = result.searchResultsCount / Calc.countOfItemsPerPage
-            state.books += result.items
-            return .init(value: .loadingActive(false))
-            
-        case let .response(.failure(error)):
-            return .init(value: .loadingActive(false))
+        case .loadMore:
+            state.currentPage += Calc.defaultOne
+            return .none
             
         case let .loadingActive(isLoading):
             state.isLoadingPage = isLoading
@@ -93,5 +71,13 @@ struct Books {
         default:
             return .none
         }
+    }
+}
+
+// MARK: - Namespace
+
+extension Books {
+    private enum Calc {
+        static let defaultOne = 1
     }
 }

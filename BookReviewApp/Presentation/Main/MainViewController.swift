@@ -60,7 +60,7 @@ extension MainViewController {
         static let searchBarHeight: CGFloat = 200
         static let collectionOffset: CGFloat = 10
         static let collectionInset: CGFloat = 10
-    }
+    }    
 }
 
 

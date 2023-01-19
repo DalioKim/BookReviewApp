@@ -10,7 +10,7 @@ import Foundation
 
 struct Search {
     struct State: Equatable {
-        var option = SearchOption.title
+       var word = ""
     }
     
     enum Action {
@@ -21,10 +21,8 @@ struct Search {
     static let reducer =
     Reducer<Search.State, Search.Action, Void> { state, action, _ in
         switch action {
-        case let .searchOptionChanged(option):
-            state.option = option
-            return .none
-        default:
+        case let .searchQueryChanged(word):
+            state.word = word
             return .none
         }
     }
