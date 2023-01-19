@@ -13,7 +13,7 @@ import Moya
 // MARK: - BookClient
 
 struct BookClient {
-    var search: (_ option: SearchOption, _ query: String, _ pageNum: Int) -> Effect<BookResponse, ServiceError>
+    var search: (_ option: Options.Search, _ query: String, _ pageNum: Int) -> Effect<BookResponse, ServiceError>
 }
 
 extension BookClient {
@@ -33,7 +33,7 @@ extension BookClient {
 fileprivate let bookProvider = MoyaProvider<BookAPI>()
 
 enum BookAPI {
-    case search(_ option: SearchOption, query: String, pageNum: Int)
+    case search(_ option: Options.Search, query: String, pageNum: Int)
 }
 
 extension BookAPI: TargetType {

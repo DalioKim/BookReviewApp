@@ -10,11 +10,12 @@ import Foundation
 
 struct Search {
     struct State: Equatable {
-       var word = ""
+        var word = ""
+        var option = Options.Search.title
     }
     
     enum Action {
-        case searchOptionChanged(SearchOption)
+        case searchOptionChanged(Options.Search)
         case searchQueryChanged(String)
     }
     
@@ -23,6 +24,9 @@ struct Search {
         switch action {
         case let .searchQueryChanged(word):
             state.word = word
+            return .none
+        case let .searchOptionChanged(option):
+            state.option = option
             return .none
         }
     }

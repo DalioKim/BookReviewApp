@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E3070A08296BB90300CC3F2C /* BooksItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3070A07296BB90300CC3F2C /* BooksItemCell.swift */; };
-		E3070A0D2976D3BD00CC3F2C /* SearchOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3070A0C2976D3BD00CC3F2C /* SearchOption.swift */; };
+		E3070A0D2976D3BD00CC3F2C /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3070A0C2976D3BD00CC3F2C /* Options.swift */; };
 		E30802432967F54400437421 /* SearchCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802422967F54400437421 /* SearchCore.swift */; };
 		E30802452967FB2D00437421 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802442967FB2D00437421 /* SearchBarView.swift */; };
 		E30802482968024900437421 /* BooksCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30802472968024900437421 /* BooksCore.swift */; };
@@ -33,7 +33,7 @@
 
 /* Begin PBXFileReference section */
 		E3070A07296BB90300CC3F2C /* BooksItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksItemCell.swift; sourceTree = "<group>"; };
-		E3070A0C2976D3BD00CC3F2C /* SearchOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOption.swift; sourceTree = "<group>"; };
+		E3070A0C2976D3BD00CC3F2C /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		E30802422967F54400437421 /* SearchCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCore.swift; sourceTree = "<group>"; };
 		E30802442967FB2D00437421 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		E30802472968024900437421 /* BooksCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCore.swift; sourceTree = "<group>"; };
@@ -69,13 +69,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E3070A092976D06B00CC3F2C /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
 		E3070A0A2976D39600CC3F2C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,7 +81,7 @@
 		E3070A0B2976D3B100CC3F2C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E3070A0C2976D3BD00CC3F2C /* SearchOption.swift */,
+				E3070A0C2976D3BD00CC3F2C /* Options.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -158,7 +151,6 @@
 			children = (
 				E3D0C6F2295C6536004071E2 /* Info.plist */,
 				E3D0C6F8295C65E1004071E2 /* Application */,
-				E3070A092976D06B00CC3F2C /* Common */,
 				E3B0A6FD295DB3F30025682C /* Helper */,
 				E3D0C706295C6F5D004071E2 /* Data */,
 				E3D0C6F9295C65F6004071E2 /* Presentation */,
@@ -316,7 +308,7 @@
 				E30802452967FB2D00437421 /* SearchBarView.swift in Sources */,
 				E30802482968024900437421 /* BooksCore.swift in Sources */,
 				E31C5657295D8DCA0026A09F /* MainCore.swift in Sources */,
-				E3070A0D2976D3BD00CC3F2C /* SearchOption.swift in Sources */,
+				E3070A0D2976D3BD00CC3F2C /* Options.swift in Sources */,
 				E3D0C6E9295C6531004071E2 /* MainViewController.swift in Sources */,
 				E3D0C70F295C7092004071E2 /* ServiceError.swift in Sources */,
 				E30802432967F54400437421 /* SearchCore.swift in Sources */,

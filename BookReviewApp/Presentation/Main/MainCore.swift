@@ -46,7 +46,7 @@ struct Main {
             switch action {
             case .request:
                 return environment.booksClient
-                    .search(.title(query: state.searchState.word, pageNum: state.booksState.currentPage))
+                    .search(state.searchState.option, state.searchState.word, state.booksState.currentPage)
                     .receive(on: environment.mainQueue)
                     .catchToEffect()
                     .map(Main.Action.response)

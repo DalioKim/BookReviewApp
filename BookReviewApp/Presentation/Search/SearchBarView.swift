@@ -13,7 +13,7 @@ class SearchBarView: UIView {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [pickerView, searchBar])
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = Size.spacing
         
         stackView.distribution = .fillEqually
         return stackView
@@ -73,18 +73,28 @@ extension SearchBarView: UISearchBarDelegate {
 
 extension SearchBarView: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return Calc.defaultOne
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return SearchOption.allCases.count
+        return Options.Search.allCases.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return SearchOption.allCases[row].rawValue
+        return Options.Search.allCases[row].rawValue
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewStore.send(.searchOptionChanged(SearchOption.allCases[row]))
+        viewStore.send(.searchOptionChanged(Options.Search.allCases[row]))
+    }
+}
+
+extension SearchBarView {
+    enum Size {
+        static let spacing: CGFloat = 10
+    }
+    
+    enum Calc {
+        static let defaultOne = 1
     }
 }

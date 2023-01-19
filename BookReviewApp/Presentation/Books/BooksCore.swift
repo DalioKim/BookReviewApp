@@ -25,8 +25,6 @@ struct Books {
     }
     
     enum Action {
-        case request(option: SearchOption, query: String)
-        case response(Result<BookResponse, ServiceError>)
         case nextPage(idx: Int)
         case loadMore
         case loadingActive(Bool)
@@ -36,20 +34,7 @@ struct Books {
     static let reducer =
     Reducer<Books.State, Books.Action, Void> { state, action, _ in
         
-        switch action {
-        case let .request(option, query):
-            state.books = []
-            state.searchOption = option
-            state.query = query
-            state.currentPage = 1
-            
-            return environment.booksClient
-                .search(state.searchOption, state.query, state.currentPage)
-                .receive(on: environment.mainQueue)
-                .catchToEffect()
-                .map(Books.Action.response)
-                .cancellable(id: BooksCancelId())
-            
+        switch action {            
         case let .nextPage(idx):
             guard state.isLastItem(idx), state.isMoreBooks else {
                 return .none
